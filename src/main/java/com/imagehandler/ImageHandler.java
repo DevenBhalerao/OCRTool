@@ -26,7 +26,7 @@ public class ImageHandler {
 		this.chosenFile = chosenFile;
 	}
 
-	public void generateText(){
+	public String generateText(){
 		BytePointer outText;
 		System.out.println(languageinImage);
         TessBaseAPI api = new TessBaseAPI();
@@ -36,17 +36,20 @@ public class ImageHandler {
             System.exit(1);
         }
         // Open input image with leptonica library
+        System.out.println("chosen file is " + chosenFile);
         PIX image = pixRead(chosenFile.getAbsolutePath());
         api.SetImage(image);
         // Get OCR result
         outText = api.GetUTF8Text();
-        String string = outText.getString();
-        assertTrue(!string.isEmpty());
-        System.out.println("OCR output:\n" + string);
+        String output = outText.getString();
+        assertTrue(!output.isEmpty());
+        System.out.println("OCR output:\n" + output);
         // Destroy used object and release memory
         api.End();
         outText.deallocate();
         pixDestroy(image);
+        
+        return output;
 	}
 
 }

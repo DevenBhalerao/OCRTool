@@ -1,16 +1,21 @@
 package com.ocrtool;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import com.imagehandler.ImageHandler;
 
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.web.HTMLEditor;
+import javafx.stage.FileChooser;
 
-public class OutputPage {
+public class OutputPage{
 	
 	@FXML
 	private HTMLEditor textEditor;
@@ -24,8 +29,18 @@ public class OutputPage {
 	
 	@FXML
 	private void onExport(MouseEvent event) {
-		ImageHandler imagehandler = new ImageHandler(chosenFile, languageinImage);
-		imagehandler.generateText();
+		FileChooser fileChooser = new FileChooser();
+		File file = fileChooser.showSaveDialog(textEditor.getScene().getWindow());
+		FileWriter fileWriter;
+		try {
+			fileWriter = new FileWriter(file);
+			fileWriter.write(textEditor.getHtmlText());
+			fileWriter.close();
+		} catch (IOException e) {
+			System.err.println("file invaild");
+			e.printStackTrace();
+		}
+		
 	}
 
 	public void setLanguage(String langname) {
@@ -33,7 +48,17 @@ public class OutputPage {
 	}
 
 	public void setFile(File chosenFile) {
+		System.out.println("file is set in outpage");
 		this.chosenFile = chosenFile;
+		setText();
 	}
+
+	private void setText() {
+		ImageHandler imagehandler = new ImageHandler(chosenFile, languageinImage);
+		imagehandler.setFile(chosenFile);
+		String textinImage = imagehandler.generateText();
+	}
+
+	
 
 }

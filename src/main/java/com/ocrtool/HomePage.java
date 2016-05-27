@@ -63,16 +63,18 @@ public class HomePage implements Initializable {
 		}
 		System.err.println("file chosen is : " + chosenFile);
 		Image imageChosen = new Image(fileStream);
-		System.err.println(imageChosen);
+		System.err.println("image chosen is " + imageChosen);
 		image.setImage(imageChosen);
 	}
 	
 	@FXML
 	private void onGetText(MouseEvent event) throws IOException {
+		System.out.println("gettext triggered");
 		Stage stage = (Stage) image.getScene().getWindow();
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("OutputPage.fxml"));
 		Parent root = (Parent) fxmlLoader.load();
 		OutputPage controller = fxmlLoader.<OutputPage> getController();
+		System.out.println("chosen file in homepage" + chosenFile);
 		controller.setFile(chosenFile);
 		controller.setLanguage(langNametoTessDataName.get(languageinImage.getSelectionModel().getSelectedItem()));
 		stage.setTitle("Output");
