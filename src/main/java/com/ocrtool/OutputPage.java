@@ -15,7 +15,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.web.HTMLEditor;
 import javafx.stage.FileChooser;
 
-public class OutputPage{
+public class OutputPage implements Initializable {
 	
 	@FXML
 	private HTMLEditor textEditor;
@@ -26,6 +26,8 @@ public class OutputPage{
 	private File chosenFile;
 	
 	private String languageinImage;
+	
+	private String textinImage;
 	
 	@FXML
 	private void onExport(MouseEvent event) {
@@ -50,14 +52,24 @@ public class OutputPage{
 	public void setFile(File chosenFile) {
 		System.out.println("file is set in outpage");
 		this.chosenFile = chosenFile;
-		setText();
 	}
 
-	private void setText() {
+	public void setText() {
 		ImageHandler imagehandler = new ImageHandler(chosenFile, languageinImage);
 		imagehandler.setFile(chosenFile);
-		String textinImage = imagehandler.generateText();
+		this.textinImage = imagehandler.generateText();
+		System.out.println("text in image is " + textinImage);
+		textEditor.setHtmlText(textinImage);
+		
+		
 	}
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		
+	}
+
+	
 
 	
 

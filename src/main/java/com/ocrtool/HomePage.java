@@ -77,6 +77,7 @@ public class HomePage implements Initializable {
 		System.out.println("chosen file in homepage" + chosenFile);
 		controller.setFile(chosenFile);
 		controller.setLanguage(langNametoTessDataName.get(languageinImage.getSelectionModel().getSelectedItem()));
+		controller.setText();
 		stage.setTitle("Output");
 		Scene scene = new Scene(root, 833, 652);
 		scene.getStylesheets().add(Main.class.getResource("application.css").toExternalForm());
